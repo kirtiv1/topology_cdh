@@ -104,7 +104,9 @@ def _get_sdc_images(args, sdc_version):
     images = []
     tag_version = args.sdc_version_tag or sdc_version
     image_name = IMAGE_NAME_TEMPLATE.format(tag_version)
-    tag = IMAGE_NAME_TEMPLATE.format('{}-latest'.format(tag_version.split('-')[0]))
+    # Following will take care of the tag versions like '3.8.1-0011-RC1'
+    # which will also be tagged like '3.8.1-0011-latest'
+    tag = IMAGE_NAME_TEMPLATE.format('{}-latest'.format(tag_version.rsplit('-', 1)[0]))
 
     for el_version in EL_VERSIONS:
         el_image_name = '{}-{}'.format(image_name, el_version)
